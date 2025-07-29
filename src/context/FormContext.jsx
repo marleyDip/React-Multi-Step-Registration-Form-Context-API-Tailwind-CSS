@@ -5,7 +5,7 @@ const FormContext = createContext();
 export const useFormContext = () => useContext(FormContext);
 
 export const FormProvider = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const steps = [
     { id: 1, title: "Personal Info", description: "Basic Information" },

@@ -143,7 +143,7 @@ function MultiStepForm() {
 
       {/* form content */}
       <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200/50 p-10 mb-10">
-        <div className="min-h-[500px]">{renderStepContent()}</div>
+        <div className="min-h-[600px]">{renderStepContent()}</div>
       </div>
       {/* form content */}
 
