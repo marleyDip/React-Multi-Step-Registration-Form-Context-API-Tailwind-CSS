@@ -1,6 +1,10 @@
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFormContext } from "../context/FormContext";
 import { stepIcons } from "../utils/Icon";
+import PersonalInfoStep from "./PersonalInfoStep";
+import ContactInfoStep from "./ContactInfoStep";
+import PreferenceStep from "./PreferenceStep";
+import ReviewStep from "./ReviewStep";
 
 function MultiStepForm() {
   const { steps, currentStep } = useFormContext();
@@ -10,6 +14,21 @@ function MultiStepForm() {
   //console.log(steps[1]);
 
   //console.log(stepIcons[1]);
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return <PersonalInfoStep />;
+      case 2:
+        return <ContactInfoStep />;
+      case 3:
+        return <PreferenceStep />;
+      case 4:
+        return <ReviewStep />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -83,8 +102,8 @@ function MultiStepForm() {
                 </div>
                 {/* info */}
 
-                {/* form => index reaches to step = 0, 1, 2 */}
-                {index < step.length - 1 && (
+                {/* desktop progress bar => index reaches = 0, 1, 2... 2 < 3 */}
+                {index < steps.length - 1 && (
                   <div
                     className={`hidden sm:block w-24 h-1 mx-6 rounded-full transition-all duration-500 ${
                       currentStep > step.id
@@ -93,7 +112,7 @@ function MultiStepForm() {
                     } `}
                   ></div>
                 )}
-                {/* form */}
+                {/* desktop progress bar */}
               </div>
             );
           })}
@@ -124,29 +143,35 @@ function MultiStepForm() {
 
       {/* form content */}
       <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200/50 p-10 mb-10">
-        <div className="min-h-[600]"></div>
+        <div className="min-h-70">{renderStepContent()}</div>
       </div>
       {/* form content */}
 
       {/* Navigation button */}
       <div className="flex items-center justify-between">
         <button
-          className={`flex items-center px-8 py-4 font-semibold rounded-2xl transition-all duration-200`}
+          className={`flex items-center px-8 py-4 font-semibold rounded-2xl transition-all duration-200 ${
+            currentStep !== 1
+              ? "bg-white text-gray-700   hover:bg-gray-50 shadow-lg hover:shadow-xl border border-gray-200 transform hover:-translate-y-1"
+              : "bg-gray-100 text-gray-400 cursor-not-allowed"
+          }`}
         >
           <ChevronLeft className="w-5 h-5 mr-2" />
           Previous
         </button>
 
-        <button
-          className={`flex items-center px-8 py-4 font-semibold rounded-2xl transition-all duration-200`}
-        >
-          <ChevronRight className="w-5 h-5 mr-2" />
-          Previous
-        </button>
-
-        {/* <button className="flex items-center px-10 py-4 text-white font-semibold bg-gradient-to-r  from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-2xl shadow-lg hover:shadow-xl transform hover:translate-y-1 transition-all duration-200">
-          Submit Registration
-        </button> */}
+        {currentStep < steps.length ? (
+          <button
+            className={`flex items-center px-8 py-4 font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white transition-all duration-200 shadow-lg hover:shadow-xl transform hover:translate-y-1`}
+          >
+            <ChevronRight className="w-5 h-5 mr-2" />
+            Next Step
+          </button>
+        ) : (
+          <button className="flex items-center px-10 py-4 text-white font-semibold bg-gradient-to-r  from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-2xl shadow-lg hover:shadow-xl transform hover:translate-y-1 transition-all duration-200">
+            Submit Registration
+          </button>
+        )}
       </div>
       {/* Navigation button */}
     </div>
