@@ -1,23 +1,123 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { useFormContext } from "../context/FormContext";
+import { stepIcons } from "../utils/Icon";
 
 function MultiStepForm() {
+  const { steps, currentStep } = useFormContext();
+
+  //console.log(currentStep);
+  //console.log(steps);
+  //console.log(steps[1]);
+
+  //console.log(stepIcons[1]);
+
   return (
     <div className="max-w-5xl mx-auto p-6">
       <div className="mb-12">
         {/* i will use logic */}
-        <div className="flex justify-between items-center  mb-6"></div>
+        <div className="flex justify-between items-center mb-6">
+          {steps.map((step, index) => {
+            const Icon = stepIcons[step.id];
+            //console.log(icon);
+
+            const isActive = currentStep === step.id;
+            const isCompleted = currentStep > step.id;
+
+            return (
+              <div className="flex items-center key={step.id} ">
+                {/* info */}
+                <div className="flex flex-col items-center">
+                  <div
+                    className={`grid place-items-center w-16 h-16 rounded-2xl transition-all duration-500 transform ${
+                      isCompleted
+                        ? "bg-gradient-to-r from-green-500 to-emerald-600 border-green-500 text-white shadow scale-110"
+                        : isActive
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-600 text-white shadow-lg scale-110"
+                        : "bg-white border-gray-300 text-gray-400"
+                    } `}
+                  >
+                    {isCompleted ? (
+                      <Check className="w-8 h-8" />
+                    ) : (
+                      <Icon className="w-8 h-8" />
+                    )}
+                  </div>
+
+                  <div className="mt-4 text-center">
+                    <p
+                      className={`text-sm font-bold ${
+                        isActive
+                          ? "text-blue-600"
+                          : isCompleted
+                          ? "text-green-500"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      Step {step.id}
+                    </p>
+
+                    <p
+                      className={`text-xs font-bold ${
+                        isActive
+                          ? "text-blue-600"
+                          : isCompleted
+                          ? "text-green-500"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {step.title}
+                    </p>
+
+                    <p
+                      className={`text-sm font-bold ${
+                        isActive
+                          ? "text-blue-600"
+                          : isCompleted
+                          ? "text-green-500"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+                {/* info */}
+
+                {/* form => index reaches to step = 0, 1, 2 */}
+                {index < step.length - 1 && (
+                  <div
+                    className={`hidden sm:block w-24 h-1 mx-6 rounded-full transition-all duration-500 ${
+                      currentStep > step.id
+                        ? "bg-gradient-to-r from-green-500 to-emerald-600"
+                        : "bg-gray-200"
+                    } `}
+                  ></div>
+                )}
+                {/* form */}
+              </div>
+            );
+          })}
+        </div>
 
         {/* mobile progressbar */}
         <div className="sm:hidden">
-          <div className="flex justify-between items-center  mb-4">
+          <div className="flex justify-between items-center mb-4">
             <span className="text-sm font-black text-gray-700">
-              Step length
+              Step {currentStep} of {steps.length}
             </span>
 
-            <span className="text-sm font-black text-gray-600">Step title</span>
+            <span className="text-sm font-black text-gray-600">
+              {steps[currentStep - 1].title}
+            </span>
           </div>
           {/* progressbar */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 h-3 rounded-full transition-all duration-700"></div>
+          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 h-3 rounded-full transition-all duration-700"
+              style={{ width: `${(currentStep / steps.length) * 100}%` }}
+            ></div>
+          </div>
+          {/* progressbar */}
         </div>
         {/* mobile progressbar */}
       </div>
