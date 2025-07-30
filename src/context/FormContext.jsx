@@ -5,7 +5,7 @@ const FormContext = createContext();
 export const useFormContext = () => useContext(FormContext);
 
 export const FormProvider = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const [errors, setErrors] = useState({});
 
@@ -52,7 +52,7 @@ export const FormProvider = ({ children }) => {
 
     if (step === 2) {
       if (!formData.contactInfo.email) newErrors.email = "Email is required";
-      else if (!/\s+@\s+\.\s+/.test(formData.contactInfo.email))
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.contactInfo.email))
         newErrors.email = "Email is Invalid";
       if (!formData.contactInfo.phone)
         newErrors.phone = "Phone Number is required";

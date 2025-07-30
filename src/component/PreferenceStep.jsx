@@ -1,6 +1,24 @@
 import { Mail, Settings } from "lucide-react";
+import { useFormContext } from "../context/FormContext";
 
 function PreferenceStep() {
+  const { formData, updateFormData } = useFormContext();
+  //console.log(formData, errors);
+
+  const handleToggle = (field, value) => {
+    updateFormData("preferences", {
+      ...formData.preferences,
+      [field]: value,
+    });
+  };
+
+  const handleSelect = (field, value) => {
+    updateFormData("preferences", {
+      ...formData.preferences,
+      [field]: value,
+    });
+  };
+
   return (
     <div className="space-y-8">
       {/* header */}
@@ -40,13 +58,25 @@ function PreferenceStep() {
 
               <button
                 type="button"
-                className={`relative inline-flex items-center h-7 w-12 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 `}
+                className={`relative inline-flex items-center h-7 w-12 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 ${
+                  formData.preferences.newsletter
+                    ? "bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg"
+                    : "bg-gray-300"
+                }`}
+                onClick={() =>
+                  handleToggle("newsletter", !formData.preferences.newsletter)
+                }
               >
                 <span
-                  className={`inline-block h-5 w-5 rounded-full bg-white transform transition-transform shadow-lg duration-300 `}
+                  className={`inline-block h-5 w-5 rounded-full bg-white transform transition-transform shadow-lg duration-300 ${
+                    formData.preferences.newsletter
+                      ? "translate-x-6"
+                      : "translate-x-1"
+                  }`}
                 />
               </button>
             </div>
+            {/* newsletter */}
 
             {/* notification */}
             <div className="flex items-center justify-between p-4 bg-white/70 hover:bg-white/90 border border-gray-200/50 rounded-xl transition-all duration-200">
@@ -62,13 +92,28 @@ function PreferenceStep() {
 
               <button
                 type="button"
-                className={`relative inline-flex items-center h-7 w-12 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 `}
+                className={`relative inline-flex items-center h-7 w-12 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 ${
+                  formData.preferences.notification
+                    ? "bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg"
+                    : "bg-gray-300"
+                }`}
+                onClick={() =>
+                  handleToggle(
+                    "notification",
+                    !formData.preferences.notification
+                  )
+                }
               >
                 <span
-                  className={`inline-block h-5 w-5 rounded-full bg-white transform transition-transform shadow-lg duration-300 `}
+                  className={`inline-block h-5 w-5 rounded-full bg-white transform transition-transform shadow-lg duration-300 ${
+                    formData.preferences.notification
+                      ? "translate-x-6"
+                      : "translate-x-1"
+                  } `}
                 />
               </button>
             </div>
+            {/* notification */}
           </div>
         </div>
 
@@ -79,7 +124,11 @@ function PreferenceStep() {
               Theme Preferences
             </label>
 
-            <select className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4  focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 bg-white/50 backdrop-blur-sm hover:border-gray-300">
+            <select
+              className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4  focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 bg-white/50 backdrop-blur-sm hover:border-gray-300"
+              value={formData.preferences.theme}
+              onChange={(e) => handleSelect("theme", e.target.value)}
+            >
               <option value="light">Light Mode</option>
               <option value="dark">Dark Mode</option>
               <option value="system">System Default</option>
@@ -91,7 +140,11 @@ function PreferenceStep() {
               Language
             </label>
 
-            <select className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4  focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 bg-white/50 backdrop-blur-sm hover:border-gray-300">
+            <select
+              className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4  focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 bg-white/50 backdrop-blur-sm hover:border-gray-300"
+              value={formData.preferences.language}
+              onChange={(e) => handleSelect("language", e.target.value)}
+            >
               <option value="en">English</option>
               <option value="bn">Bengali</option>
               <option value="ar">Arabic</option>

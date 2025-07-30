@@ -56,6 +56,7 @@ function ContactInfoStep() {
               )}
             </div>
           </div>
+          {/* Email Field */}
 
           {/* Phone Field */}
           <div className="space-y-2">
@@ -83,7 +84,9 @@ function ContactInfoStep() {
               )}
             </div>
           </div>
+          {/* Phone Field */}
         </div>
+        {/* input fields */}
 
         {/* Address Field */}
         <div className="space-y-2">
@@ -93,7 +96,7 @@ function ContactInfoStep() {
 
           <div className="relative">
             <input
-              type="number"
+              type="text"
               value={formData.contactInfo.address}
               onChange={(e) => handleChange("address", e.target.value)}
               placeholder="Enter Your Address"
@@ -111,8 +114,9 @@ function ContactInfoStep() {
             )}
           </div>
         </div>
+        {/* Address Field */}
 
-        {/* input fields */}
+        {/* input fields 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* City Field */}
           <div className="space-y-2">
@@ -140,6 +144,7 @@ function ContactInfoStep() {
               )}
             </div>
           </div>
+          {/* City Field */}
 
           {/* Zip Code Field */}
           <div className="space-y-2">
@@ -167,7 +172,9 @@ function ContactInfoStep() {
               )}
             </div>
           </div>
+          {/* Zip Code Field */}
         </div>
+        {/* input fields 2 */}
       </div>
     </div>
   );
