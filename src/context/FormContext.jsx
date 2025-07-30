@@ -5,9 +5,11 @@ const FormContext = createContext();
 export const useFormContext = () => useContext(FormContext);
 
 export const FormProvider = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const [errors, setErrors] = useState({});
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -31,6 +33,7 @@ export const FormProvider = ({ children }) => {
     },
   });
 
+  // update form input value
   const updateFormData = (section, data) => {
     setFormData((prev) => ({
       ...prev,
@@ -38,6 +41,7 @@ export const FormProvider = ({ children }) => {
     }));
   };
 
+  // if value empty then error msg
   const validateStep = (step) => {
     const newErrors = {};
 
@@ -79,6 +83,44 @@ export const FormProvider = ({ children }) => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
+  // handle submit
+  const handleSubmit = () => {
+    if (validateStep(currentStep)) {
+      console.log("Form Submitted", formData);
+    }
+
+    setIsSubmitted(true);
+  };
+
+  // reset form
+  const resetForm = () => {
+    setCurrentStep(1);
+    setErrors({});
+    setIsSubmitted(false);
+    setFormData({
+      personalInfo: {
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        gender: "",
+      },
+      contactInfo: {
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        zipCode: "",
+      },
+      preferences: {
+        newsletter: false,
+        notification: true,
+        theme: "light",
+        language: "bn",
+      },
+    });
+  };
+
+  // multi step
   const steps = [
     { id: 1, title: "Personal Info", description: "Basic Information" },
     { id: 2, title: "Contacts", description: "Reach You!" },
@@ -94,6 +136,9 @@ export const FormProvider = ({ children }) => {
     updateFormData,
     nextStep,
     prevStep,
+    handleSubmit,
+    isSubmitted,
+    resetForm,
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

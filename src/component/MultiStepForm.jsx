@@ -1,4 +1,4 @@
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useFormContext } from "../context/FormContext";
 import { stepIcons } from "../utils/Icon";
 import PersonalInfoStep from "./PersonalInfoStep";
@@ -7,7 +7,15 @@ import PreferenceStep from "./PreferenceStep";
 import ReviewStep from "./ReviewStep";
 
 function MultiStepForm() {
-  const { steps, currentStep, nextStep, prevStep } = useFormContext();
+  const {
+    steps,
+    currentStep,
+    nextStep,
+    prevStep,
+    handleSubmit,
+    isSubmitted,
+    resetForm,
+  } = useFormContext();
 
   //console.log(currentStep);
   //console.log(steps);
@@ -29,6 +37,40 @@ function MultiStepForm() {
         return null;
     }
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="max-w-2xl mx-auto p-6">
+        <div className="text-center py-16">
+          <div className="relative mb-8">
+            <div className="w-24 h-24 mx-auto bg-gradient-to-r from-green-400 to-emerald-500 rounded-full grid place-items-center shadow-2xl">
+              <Check className="w-12 h-12 text-white" />
+            </div>
+
+            <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full grid place-items-center">
+              <Sparkles className="w-4 h-4 text-white" />
+            </div>
+          </div>
+
+          <h2 className="text-4xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-4">
+            Registration Complete!
+          </h2>
+
+          <p className="text-xl  text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+            Thank you for providing your information. We'll grt back to you soon
+            with next steps.
+          </p>
+
+          <button
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl shadow-lg transform transition-all duration-200  hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:-translate-y-1"
+            onClick={resetForm}
+          >
+            Submit Another Form
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -170,7 +212,10 @@ function MultiStepForm() {
             Next Step
           </button>
         ) : (
-          <button className="flex items-center px-10 py-4 text-white font-semibold bg-gradient-to-r  from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-2xl shadow-lg hover:shadow-xl transform hover:translate-y-1 transition-all duration-200">
+          <button
+            className="flex items-center px-10 py-4 text-white font-semibold bg-gradient-to-r  from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-2xl shadow-lg hover:shadow-xl transform hover:translate-y-1 transition-all duration-200"
+            onClick={handleSubmit}
+          >
             Submit Registration
           </button>
         )}
