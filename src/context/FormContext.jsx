@@ -31,6 +31,13 @@ export const FormProvider = ({ children }) => {
     },
   });
 
+  const updateFormData = (section, data) => {
+    setFormData((prev) => ({
+      ...prev,
+      [section]: { ...prev[section], ...data },
+    }));
+  };
+
   const validateStep = (step) => {
     const newErrors = {};
 
@@ -60,6 +67,18 @@ export const FormProvider = ({ children }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // next button
+  const nextStep = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length));
+    }
+  };
+
+  // previous button
+  const prevStep = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
   const steps = [
     { id: 1, title: "Personal Info", description: "Basic Information" },
     { id: 2, title: "Contacts", description: "Reach You!" },
@@ -67,7 +86,15 @@ export const FormProvider = ({ children }) => {
     { id: 4, title: "Review", description: "Final Check" },
   ];
 
-  const value = { steps, currentStep, formData, errors };
+  const value = {
+    steps,
+    currentStep,
+    formData,
+    errors,
+    updateFormData,
+    nextStep,
+    prevStep,
+  };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
 };

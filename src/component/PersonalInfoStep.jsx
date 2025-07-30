@@ -1,6 +1,17 @@
 import { User } from "lucide-react";
+import { useFormContext } from "../context/FormContext";
 
 function PersonalInfoStep() {
+  const { formData, errors, updateFormData } = useFormContext();
+  //console.log(formData, errors);
+
+  const handleChange = (field, value) => {
+    updateFormData("personalInfo", {
+      ...formData.personalInfo,
+      [field]: value,
+    });
+  };
+
   return (
     <div className="space-y-8">
       {/* header */}
@@ -30,15 +41,24 @@ function PersonalInfoStep() {
           <div className="relative">
             <input
               type="text"
+              value={formData.personalInfo.firstName}
+              onChange={(e) => handleChange("firstName", e.target.value)}
               placeholder="Enter Your First Name"
-              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                errors.firstName
+                  ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
             />
 
-            <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-              Please enter your first name
-            </div>
+            {errors.firstName && (
+              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                {errors.firstName}
+              </div>
+            )}
           </div>
         </div>
+        {/* first name */}
 
         {/* Last name */}
         <div className="space-y-2">
@@ -49,19 +69,28 @@ function PersonalInfoStep() {
           <div className="relative">
             <input
               type="text"
+              value={formData.personalInfo.lastName}
+              onChange={(e) => handleChange("lastName", e.target.value)}
               placeholder="Enter Your Last Name"
-              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200  ${
+                errors.lastName
+                  ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
             />
 
-            <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-              Please enter your last name
-            </div>
+            {errors.lastName && (
+              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                {errors.lastName}
+              </div>
+            )}
           </div>
         </div>
+        {/* Last name */}
       </div>
       {/* input fields */}
 
-      {/* info fields */}
+      {/* input fields 2 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Date Of Birth */}
         <div className="space-y-2">
@@ -72,14 +101,23 @@ function PersonalInfoStep() {
           <div className="relative">
             <input
               type="date"
-              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+              value={formData.personalInfo.dateOfBirth}
+              onChange={(e) => handleChange("dateOfBirth", e.target.value)}
+              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                errors.dateOfBirth
+                  ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
             />
 
-            <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-              Please enter date of birth
-            </div>
+            {errors.dateOfBirth && (
+              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                {errors.dateOfBirth}
+              </div>
+            )}
           </div>
         </div>
+        {/* Date Of Birth */}
 
         {/* Gender */}
         <div className="space-y-2">
@@ -87,7 +125,11 @@ function PersonalInfoStep() {
             Gender*
           </label>
 
-          <select className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 bg-white/50 backdrop-blur-sm hover:border-r-gray-300">
+          <select
+            className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 bg-white/50 backdrop-blur-sm hover:border-gray-300"
+            value={formData.personalInfo.gender}
+            onChange={(e) => handleChange("gender", e.target.value)}
+          >
             <option>Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -95,8 +137,9 @@ function PersonalInfoStep() {
             <option value="prefer-not-to-say">Prefer Not to Say</option>
           </select>
         </div>
+        {/* Gender */}
       </div>
-      {/* info fields */}
+      {/* info fields 2 */}
     </div>
   );
 }

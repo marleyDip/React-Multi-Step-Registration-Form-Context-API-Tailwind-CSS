@@ -1,6 +1,16 @@
 import { Mail } from "lucide-react";
+import { useFormContext } from "../context/FormContext";
 
 function ContactInfoStep() {
+  const { formData, errors, updateFormData } = useFormContext();
+
+  const handleChange = (field, value) => {
+    updateFormData("contactInfo", {
+      ...formData.contactInfo,
+      [field]: value,
+    });
+  };
+
   return (
     <div className="space-y-8">
       {/* header */}
@@ -29,13 +39,21 @@ function ContactInfoStep() {
             <div className="relative">
               <input
                 type="email"
+                value={formData.contactInfo.email}
+                onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="Enter Your Email Address"
-                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                  errors.email
+                    ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
               />
 
-              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-                Please enter your email address
-              </div>
+              {errors.email && (
+                <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                  {errors.email}
+                </div>
+              )}
             </div>
           </div>
 
@@ -48,13 +66,21 @@ function ContactInfoStep() {
             <div className="relative">
               <input
                 type="number"
+                value={formData.contactInfo.phone}
+                onChange={(e) => handleChange("phone", e.target.value)}
                 placeholder="Enter Your Phone Number"
-                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                  errors.phone
+                    ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
               />
 
-              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-                Please enter your phone number
-              </div>
+              {errors.phone && (
+                <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                  {errors.phone}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -68,13 +94,21 @@ function ContactInfoStep() {
           <div className="relative">
             <input
               type="number"
+              value={formData.contactInfo.address}
+              onChange={(e) => handleChange("address", e.target.value)}
               placeholder="Enter Your Address"
-              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+              className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                errors.address
+                  ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
             />
 
-            <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-              Please enter your address
-            </div>
+            {errors.address && (
+              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                {errors.address}
+              </div>
+            )}
           </div>
         </div>
 
@@ -89,13 +123,21 @@ function ContactInfoStep() {
             <div className="relative">
               <input
                 type="text"
+                value={formData.contactInfo.city}
+                onChange={(e) => handleChange("city", e.target.value)}
                 placeholder="Enter Your City"
-                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                  errors.city
+                    ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
               />
 
-              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-                Please enter your city
-              </div>
+              {errors.city && (
+                <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                  {errors.city}
+                </div>
+              )}
             </div>
           </div>
 
@@ -108,13 +150,21 @@ function ContactInfoStep() {
             <div className="relative">
               <input
                 type="number"
+                value={formData.contactInfo.zipCode}
+                onChange={(e) => handleChange("zipCode", e.target.value)}
                 placeholder="Enter Your Zip Code"
-                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200`}
+                className={`w-full px-4 py-4 bg-white/50 backdrop-blur-sm border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 ${
+                  errors.zipCode
+                    ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
               />
 
-              <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
-                Please enter your zip code
-              </div>
+              {errors.zipCode && (
+                <div className="absolute left-0 -bottom-6 flex items-center text-red-500 text-sm">
+                  {errors.zipCode}
+                </div>
+              )}
             </div>
           </div>
         </div>
